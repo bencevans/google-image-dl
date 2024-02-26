@@ -14,7 +14,7 @@ struct Opts {
     engine_id: String,
 
     #[clap(short, long, default_value = "images")]
-    ouput: String,
+    output: String,
 
     #[clap(short, long, default_value = "500")]
     target: u64,
@@ -40,7 +40,7 @@ async fn main() {
 
         for image in response.items.iter() {
             println!("{:?}", image);
-            if let Err(err) = download_image(&image.link, Path::new(&opts.ouput)).await {
+            if let Err(err) = download_image(&image.link, Path::new(&opts.output)).await {
                 eprintln!("Failed to download image: {}", err);
             } else {
                 n_images += 1;
