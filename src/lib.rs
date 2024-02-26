@@ -109,7 +109,7 @@ pub struct Image {
 #[cfg(test)]
 mod test {
 
-    const example_response: &str = r#"{
+    const EXAMPLE_RESPONSE: &str = r#"{
   "kind": "customsearch#search",
   "url": {
     "type": "application/json",
@@ -360,7 +360,7 @@ mod test {
 
     #[test]
     fn test_deserialize() {
-        let response: super::Response = serde_json::from_str(example_response).unwrap();
+        let response: super::Response = serde_json::from_str(EXAMPLE_RESPONSE).unwrap();
         assert_eq!(response.kind, "customsearch#search");
         assert_eq!(response.url.r#type, "application/json");
         assert_eq!(
