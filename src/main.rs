@@ -70,23 +70,17 @@ async fn download_image(url: &str, output: &Path) -> Result<(), Box<dyn std::err
 
     let bytes = response.bytes().await?;
 
-    // file extension
-    let mut ext = url.split('.').last().unwrap_or("jpg");
-
-    // srip query string
-    if let Some(index) = ext.find('?') {
-        ext = &ext[..index];
-    }
+    // read image
+    let image = image::load_from_memory(&bytes)?;
 
     let uuid = uuid::Uuid::new_v4();
 
     // make output directory
     std::fs::create_dir_all(output)?;
 
-    let output = output.join(format!("{}.{}", uuid, ext));
+    let output = output.join(format!("{}.jpg", uuid));
 
-    let mut out = std::fs::File::create(output)?;
-    let mut reader = std::io::Cursor::new(bytes);
-    std::io::copy(&mut reader, &mut out)?;
+    // save image
+    image.save(output)?;
     Ok(())
 }
