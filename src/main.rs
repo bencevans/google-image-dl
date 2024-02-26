@@ -15,14 +15,16 @@ struct Opts {
 
     #[clap(short, long, default_value = "images")]
     ouput: String,
+
+    #[clap(short, long, default_value = "500")]
+    target: u64,
 }
 
 #[tokio::main]
 async fn main() {
     let opts: Opts = Opts::parse();
-    println!("{:?}", opts);
 
-    let target = 500;
+    let target = opts.target;
 
     let client = Client::new(opts.api_key, opts.engine_id);
 
